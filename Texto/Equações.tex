@@ -1,0 +1,129 @@
+\documentclass[11pt]{extarticle}
+%%%%%
+\usepackage[utf8]{inputenc}% Permite digitar acentuações diretamente
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{ extsizes}
+\pdfminorversion=5 
+\pdfcompresslevel=9
+\usepackage{caption}
+\usepackage[justification=centering]{caption}
+\usepackage{graphicx}
+\makeatletter
+\newcommand{\vo}{\vec{o}\@ifnextchar{^}{\,}{}}
+\makeatother
+\usepackage[section]{placeins}
+
+\usepackage{amsmath} % Permite diagramação matemática avançada
+\usepackage{parskip} 
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+\hyphenation{ res-trin-gir}
+\setlength{\parindent}{4em}
+\usepackage{cleveref}
+\usepackage{indentfirst}
+\usepackage[export]{adjustbox}
+\usepackage[usenames,dvipsnames,table]{xcolor} % Permite usar cores
+\usepackage{fancyvrb} % Desenha conteúdos verbatim com caixas ao redor
+\newcommand{\crefrangeconjunction}{--}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Rn}{{\ensuremath{\mathbb{R}}}^{n}}
+\newcommand{\Rm}{{\ensuremath{\mathbb{R}}}^{m}}
+\newcommand{\Rnn}{{\ensuremath{\mathbb{R}}}^{ n \times n }}
+\newcommand{\Rmn}{{\ensuremath{\mathbb{R}}}^{ m \times n }}
+\newcommand{\Rmm}{{\ensuremath{\mathbb{R}}}^{ m \times m }}
+\newcommand{\Rno}{{\ensuremath{\mathbb{R}}}^{n+1}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\blackbox}{\rule{2mm}{2mm}}
+\newcommand{\dem}[1]{\noindent {\bf Demonstra\c{c}\~{a}o\ :} #1\hfill \blackbox\
+	medskip}
+\newcommand{\raiz}{\mbox{raiz}}
+\newcommand{\contcaption}[1]{\vspace*{-0.6\baselineskip}\begin{center}#1\end{center}\vspace*{-0.6\baselineskip}}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\title{Relat\'orio Inicia\c{c}\~ao Cient\'ifica}
+\author{Jo\~ao Victor Precht Reis \\ Orientador:Cesar Pacheco\\
+Código: IC177908}
+\textheight 22cm \voffset-2.5cm \textwidth 16.5cm
+\hoffset -2.cm
+\begin{document}
+\section{Modelagem}
+Este trabalho  visa verificar a influência de diferentes configurações de tumores na superfície da pele. Considerou-se que o formato do antebraço de humano médio pode ser simplificado por um cilíndro maciço, dividido em três seções de diferentes diametros, representado a pele, o músculo e osso. As dimensões do cilíndro e de cada seção podem ser vistas na Figura \ref{fig:geometria} abaixo.
+
+
+\begin{figure}[h!]
+	\centering
+	%\includegraphics[width=0.8\textwidth]{}
+	\caption{ \label{fig:geometria}}
+\end{figure}
+
+
+O modelo de bio transferência de calor utilizado foi o descrito por . Esse modelo possui as seguintes variaveis:densidade do tecido $\rho$; condutividade térmica do tecido $k$; densidade do sangue $\rho_b$; calor específico do sangue a pressão constante $c_b$; taxa de perfusão sanguínea do tecido $w$; temperatura do sangue arterial $T_a$; temperatura do tecido analisado $T$; taxa de geração de calor metabolico por unidade de volume do tecido $Q_m$.
+\begin{gather}
+\frac{1}{r}\frac{\partial}{\partial r}k r \frac{\partial T(r,z)}{\partial r}+\frac{\partial}{\partial z}k\frac{\partial T(r,z)}{\partial z} +\rho_b c_b w [T_a-T(r,z)]=0 \\
+\underbrace{\int_{s}^{n} \int_{e}^{w} \frac{1}{r}\frac{\partial}{\partial r}k r \frac{\partial T(r,z)}{\partial r}rdrdz}_\text{P1}    +\underbrace{\int_{s}^{n} \int_{e}^{w} \frac{\partial}{\partial z}k\frac{\partial T(r,z)}{\partial z} rdrdz}_\text{P2}    +\underbrace{\int_{s}^{n} \int_{e}^{w} \rho_b c_b w [T_a-T(r,z)]rdrdz}_\text{P3}  =0
+\end{gather}
+\begin{gather}
+P1:\int_{s}^{n} \int_{e}^{w} \frac{1}{r}\frac{\partial}{\partial r}k r \frac{\partial T(r,z)}{\partial r}rdrdz=\int_{s}^{n} \int_{e}^{w} \frac{\partial}{\partial r}k r \frac{\partial T(r,z)}{\partial r}drdz=\int_{e}^{w} k r \frac{\partial T(r,z)}{\partial r} \biggr\rvert^{n}_{s} dz= \\
+k r \frac{\partial T(r,z)}{\partial r} \biggr\rvert^{n}_{s} \Delta z=   k_n r_n \frac{\partial T(r,z)}{\partial r}\biggr\rvert_{n}\Delta z-k_s r_s \frac{\partial T_s(r,z)}{\partial r}\biggr\rvert_{s}\Delta z\\
+=k_n r_n \frac{T_N-T_P}{\Delta r}\Delta z-k_s r_s  \frac{T_P-T_S}{\Delta r}\Delta z 
+\end{gather} 
+
+\begin{gather}                                           
+P2:\int_{s}^{n} \int_{e}^{w}\frac{\partial}{\partial z}k \frac{\partial T(r,z)}{\partial z}rdrdz=\int_{s}^{n} k r \frac{\partial T(r,z)}{\partial z} \biggr\rvert^{w}_{e} dr= \\
+\int_{s}^{n} r k  \frac{\partial T(r,z)}{\partial z} \biggr\rvert^{w}_{e} dr=  \frac{r^2}{2}\biggr\rvert^{n}_{s} k \frac{\partial T(r,z)}{\partial r} \biggr\rvert^{w}_{e}=\\ \frac{r^2}{2}\biggr\rvert^{n}_{s}k_w \frac{T_W-T_P}{\Delta z} -\frac{r^2}{2}\biggr\rvert^{n}_{s}k_e \frac{T_P-T_E}{\Delta z} 
+=r_P \Delta r k_w \frac{T_W-T_P}{\Delta z} -r_P \Delta r k_e \frac{T_P-T_E}{\Delta z}
+\end{gather}   
+
+\begin{gather}                                           
+P3:\int_{s}^{n} \int_{e}^{w} \rho_b c_b w [T_a-T(r,z)]rdrdz = \rho_b c_b w [T_a-T_P]\frac{r^2}{2}\biggr\rvert^{n}_{s}z\biggr\rvert^{w}_{e}\\ =\rho_b c_b w [T_a-T_P]r_P \Delta r\Delta z
+\end{gather} 
+   
+\begin{gather}                                           
+*OBS:\frac{r^2}{2}\biggr\rvert^{n}_{s}=\frac{r_{n}^2}{2}-\frac{r_{s}^2}{2}=\frac{1}{2}\biggr(r_P+\frac{\Delta r}{2}\biggr)^2-\frac{1}{2}\biggr(r_P-\frac{\Delta r}{2}\biggr)^2\\
+=\frac{1}{2}\biggr(r_P^2+r_P\Delta r+\frac{\Delta r ^2}{4}\biggr)-\frac{1}{2}\biggr(r_P^2-r_P\Delta r+\frac{\Delta r ^2}{4}\biggr)=r_P\Delta r
+\end{gather}    
+
+Reorganizando as equações:
+\begin{gather}                                           
+k_n r_n \frac{T_N-T_P}{\Delta r}\Delta z-k_s r_s  \frac{T_P-T_S}{\Delta r}\Delta z +r_P \Delta r k_w \frac{T_W-T_P}{\Delta z} -r_P \Delta r k_e \frac{T_P-T_E}{\Delta z}+\rho_b c_b w [T_a-T_P]r_P \Delta r\Delta z=0\\
+k_n r_n \frac{\Delta z}{\Delta r}T_N+k_s r_s \frac{\Delta z}{\Delta r}T_S+r_P  r k_w \frac{\Delta r}{\Delta z}T_W+r_P k_e \frac{\Delta r}{\Delta z}T_E \\-\biggr( k_n r_n \frac{\Delta z}{\Delta r}+k_s r_s \frac{\Delta z}{\Delta r}+r_P  r k_w \frac{\Delta r}{\Delta z}+r_P k_e \frac{\Delta r}{\Delta z}+\rho_b c_b wr_P \Delta r\Delta z)Tp+\rho_b c_b wr_P \Delta r\Delta z T_a=0 \biggr (
+\end{gather}   
+
+%\begin{gather}                                           
+%A_N=k_n r_n \frac{\Delta z}{\Delta r} \n \n A_S=k_s r_s \frac{\Delta z}{\Delta r}\\
+%A_W=r_P k_w \frac{\Delta r}{\Delta z} ; A_E=r_P k_e \frac{\Delta r}{\Delta z}\\
+%A_a=\rho_b c_b wr_P \Delta r\Delta z\\
+%A_N T_N+A_S T_S+A_W T_W+A_E T_E-(A_N+A_S+A_W+A_E+A_a)T_P=-A_a T_a
+%\end{gather}
+Para as condições de contorno: \\
+Fronteira Esquerda:
+\begin{gather}     
+\frac{\partial T}{\partial z}\biggr\rvert_{z=0}=0\\
+A_W=0\\
+A_N T_N+A_S T_S+A_E T_E-(A_N+A_S+A_E+A_a)T_P=-A_a T_a
+\end{gather} 
+Fronteira Direita:
+\begin{gather}     
+\frac{\partial T}{\partial z}\biggr\rvert_{z=Lz}=0\\
+A_E=0\\
+A_N T_N+A_S T_S+A_W T_W-(A_N+A_S+A_W+A_a)T_P=-A_a T_a
+\end{gather} 
+Fronteira Sul:
+\begin{gather}     
+\frac{\partial T}{\partial r}\biggr\rvert_{r=0}=0\\
+A_S=0\\
+A_N T_N+A_W T_W+A_E T_E-(A_N+A_W+A_E+A_a)T_P=-A_a T_a
+\end{gather} 
+Fronteira Norte:
+\begin{gather}     
+-k\frac{\partial T}{\partial r}\biggr\rvert_{r=Lr}=h(T_\infty-T)\\
+A_N=0\\
+A_c=\frac{h}{1+h\frac{\Delta r}{k_P}}r_n \Delta z\\
+A_S T_S+A_W T_W+A_E T_E-(A_S+A_W+A_E+A_a+A_c)T_P=-A_a T_a-A_cT_\infty
+\end{gather} 
+
+
+
+
+\end{document}

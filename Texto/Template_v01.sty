@@ -1,0 +1,235 @@
+\usepackage[T1]{fontenc}		        % Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		        % Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+% ---
+\usepackage{adjustbox}
+\usepackage{pdfpages}
+\usepackage{etoolbox}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{nomencl}
+\setuptoc{toc}{totoc}
+\usepackage{tocloft}
+\usepackage{titletoc}
+% ---
+\usepackage{babel}
+\usepackage{xspace,calc}
+\usepackage{xpatch}
+\usepackage{soul,array, curves,supertabular}
+%MUDANDO FONTE DOS TÍTULOS 
+%----------------------------
+\usepackage{fourier,times}
+\renewcommand{\tocheadstart}{\ABNTEXchapterfont}
+\renewcommand{\sfdefault}{\rmdefault} % No serif fonts, use roman (times)
+\renewcommand{\ABNTEXchapterfont}{\fontseries{b}\selectfont}
+\renewcommand{\ABNTEXsectionfont}{\scshape\selectfont}
+
+%\renewcommand{\ABNTEXchapterfont}{\fontfamily{times}\fontseries{b}\selectfont}
+%--------------------------
+\usepackage{amsmath, amssymb, amsfonts}
+\graphicspath{ {./Imagens/} } %mudar o diretório
+\usepackage{nomencl}
+\makenomenclature
+\renewcommand{\nomname}{Lista de símbolos}
+\usepackage{ifthen}
+\renewcommand{\nomgroup}[1]{%
+	\item[\bfseries
+	\ifthenelse{\equal{#1}{R}}{Letras romanas}{%
+		\ifthenelse{\equal{#1}{G}}{Letras gregas}{%
+			\ifthenelse{\equal{#1}{S}}{Subíndices}{}}}%
+	]}
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}		% Citações padrão ABNT
+
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ----
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\sen}{sen}
+\DeclareMathOperator{\senh}{senh}
+\let\sin\undefined
+\let\sinh\undefined
+\DeclareMathOperator{\sin}{sen}
+\DeclareMathOperator{\sinh}{senh}
+\DeclareMathAlphabet{\mathcal}{U}{eus}{m}{n}
+% ----
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+%---
+\renewcommand{\imprimircapa}{%
+  \begin{capa}%
+    \center
+    \ABNTEXchapterfont\bfseries\large\imprimirinstituicao
+    
+    \vfill
+    
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vfill
+    \begin{vplace}[0.3]
+    \ABNTEXchapterfont\bfseries\LARGE\imprimirtitulo
+    \end{vplace}
+    \vfill
+    
+    \large\imprimirlocal
+
+    \large\imprimirdata
+    
+    \vspace*{1cm}
+  \end{capa}
+}
+%---
+
+%---
+\makeatletter
+\renewcommand{\folhaderostocontent}{
+\begin{center}
+{\ABNTEXchapterfont\large\imprimirautor}
+
+\vspace*{\fill}\vspace*{\fill}
+
+{\ABNTEXchapterfont\bfseries\Large\imprimirtitulo}
+
+\vspace*{\fill}
+
+\abntex@ifnotempty{\imprimirpreambulo}{%
+
+\hspace{.45\textwidth}
+\begin{minipage}{.5\textwidth}
+\DoubleSpacing
+\imprimirpreambulo
+\end{minipage}%
+\vspace*{\fill}
+}%
+{\large\imprimirorientadorRotulo \\ \imprimirorientador\par}
+\abntex@ifnotempty{\imprimircoorientador}{%
+{\large\imprimircoorientadorRotulo~\imprimircoorientador}%
+}%
+\vspace*{\fill}
+{\large\imprimirlocal}
+\par
+{\large\imprimirdata}
+\vspace*{1cm}
+\end{center}
+}
+\makeatother
+
+%---
+
+\makeatletter
+
+\renewcommand\frontmatter{%
+    \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{roman}}
+
+\renewcommand\mainmatter{%
+    \cleardoublepage
+  \@mainmattertrue
+  \pagenumbering{arabic}}
+
+\renewcommand\backmatter{%
+  \if@openright
+    \cleardoublepage
+  \else
+    \clearpage
+  \fi
+  \@mainmatterfalse
+   }
+
+\makeatother
+
+
+%---
+\titlecontents{chapter}[1.5em]
+   {\bigskip}
+   {\contentslabel{1.5em}}%change the argument to obtain the 
+                          %desired spacing
+   {}
+   {\titlerule*[1.2pc]{.}\contentspage}
+
+    \titlecontents{section}[2em]{\bigskip}%
+    {\thecontentslabel.\enspace}%numbered sections
+    {}%numberless section
+    {\titlerule*[1.2pc]{.}\contentspage}%
+
+    \titlecontents{subsection}[2em]{\bigskip}%
+    {\thecontentslabel.\enspace}%numbered sections
+    {}%numberless section
+    {\titlerule*[1.2pc]{.}\contentspage}%
+    
+%\makeatletter
+%%
+%\renewenvironment{thebibliography}[1]
+%     {%\if@chapterbib
+%       % \section*{\refname\@mkboth{\refname}{\refname}}%
+%      %\else
+%        \chapter{\MakeUppercase{\bibname}}%% 
+%      %\fi
+%      \list{\@biblabel{\arabic{enumiv}}}%
+%           {\settowidth\labelwidth{\@biblabel{#1}}%
+%            \leftmargin\labelwidth
+%            \advance\leftmargin\labelsep
+%            \if@openbib
+%              \advance\leftmargin\bibindent
+%              \itemindent -\bibindent
+%              \listparindent \itemindent
+%              \parsep \z@
+%            \fi
+%            \usecounter{enumiv}%
+%            \let\p@enumiv\@empty
+%            \renewcommand\theenumiv{\arabic{enumiv}}}%
+%      \if@openbib
+%        \renewcommand\newblock{\par}
+%      \else
+%        \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
+%      \fi
+%      \sloppy\clubpenalty4000\widowpenalty4000%
+%      \sfcode`\.=\@m}
+%     {\def\@noitemerr
+%       {\@latex@warning{Empty `thebibliography' environment}}%
+%      \endlist}
+%%
+%\newlength\savedwidth
+%\newcommand{\whline}{\noalign{\global\savedwidth\arrayrulewidth
+%        \global\arrayrulewidth 1pt}%
+%        \hline
+%        \noalign{\global\arrayrulewidth\savedwidth}}
+%%
+%\makeatother
+
+
